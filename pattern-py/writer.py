@@ -1,4 +1,5 @@
-#!/usr/bin/python3
+#!/usr/bin/env python3
+
 import struct
 import os
 import statistics
@@ -77,7 +78,7 @@ class LedFile(object):
         self.duration_ms = max(self.duration_ms, timestamp_ms)
 
     def updateTimeIndex(self, timestamp_ms):
-        if timestamp_ms > self.next_index_time_ms:
+        if timestamp_ms >= self.next_index_time_ms:
             self.next_index_time_ms += 1000
 
             index = struct.pack(self.PATTERN_TIME_INDEX_FORMAT,
@@ -118,12 +119,17 @@ class LedFile(object):
 
         self.f.close()
 
-led = LedFile('/tmp/test.led')
+if __name__ == "__main__":
+    import random
 
-for time in range(0,30000000,33):
-    led.addDataPacket(time, 0, False, bytearray(10))
-    led.addDataPacket(time, 1, False, bytearray(10))
-    led.addDataPacket(time, 2, False, bytearray(10))
-    led.addSyncPacket(time)
+    parser = argparse.ArgumentParser()
+    parser.add_argument('filename', action="store")
+    args = parser.parse_args()
 
-led.finalize()
+    led = LedFile(args.filename)
+
+    for time in range(0,10000,33):
+        led.addDataPacket(time, 0, False, bytearray(random.randrange(512)))
+        led.addDataPacket(time, 1, False, bytearray(random.randrange(512)))
+        led.addDataPacket(time, 2, False, bytearray(random.randrange(512)))
+        led.addSyncPacket(time)

@@ -1,0 +1,20 @@
+# General temp files
+*.DS_Store
+*.swp
+*.lck
+*.autosave
+*.user
+*.pyc
+
+# GNU/Make
+*/*.hex
+/*.elf
+*/*.o
+*/*.d
+*/*.i
+*/*.ii
+*/*.s
+*/*.dfu
+
+
+# Project specific
