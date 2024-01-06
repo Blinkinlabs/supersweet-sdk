@@ -9,7 +9,7 @@ class LedFile(object):
     PRELUDE_OFFSET = 0
     PRELUDE_FORMAT = '<8sIIII'
     PRELUDE_MAGIC = b'\x5FLED\r\n\x1A\n'
-    PRELUDE_VERSION = 0 # TODO
+    PRELUDE_VERSION = 2 # TODO
     HEADER_FORMAT = '<IIIII'
 
     PATTERN_PACKET_FORMAT = '<IHII?'

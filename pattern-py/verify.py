@@ -46,6 +46,22 @@ def extract_prelude(f, filename):
     return prelude 
 
 def extract_header(f, header_offset):
+    """ Extract a file header
+
+    Attempts to read a header from the file, at the given offset. 
+
+    Parameters
+    ----------
+    name : f
+        File to read fromh
+    header_offset : int
+        Offset from the beginning of the file to read the header from
+
+    Returns
+    ----------
+    dict
+        Dictionary containing the values of each field in the header
+    """
     HEADER_FORMAT = '<IIIII'
 
     f.seek(header_offset)
@@ -259,7 +275,6 @@ def verify(filename, dump_packets = False, dump_time_indexes = False):
                 header['data_size'],
                 dump_packets
                 )
-        calc_universe_stats(data['universe_stats'])
         time_indexes = extract_time_indexes(
                 f,
                 header['time_index_offset'],
@@ -269,6 +284,8 @@ def verify(filename, dump_packets = False, dump_time_indexes = False):
                 data['packet_offsets'],
                 dump_time_indexes
                 )
+
+        calc_universe_stats(data['universe_stats'])
 
         #TODO: time index stats
 
